@@ -30,6 +30,8 @@ postRoutes.post('/', [verificarToken], (req: any, res: Response) => {
 
     const body = req.body;
     body.usuario = req.usuario._id;
+    const imagenes = fileSystem.moveTempPost(req.usuario._id);
+    body.imgs = imagenes;
 
     Post.create( body ).then( async postDB => {
 
@@ -77,6 +79,13 @@ postRoutes.post('/upload', [verificarToken], async (req: any, res: Response) => 
         mensaje: "de acuerdo",
         file: file.mimetype
     });
+});
+
+postRoutes.get('/imagen/:userid/:img', (req: any, res: Response) => {
+    const userId = req.params.userid;
+    const img = req.params.img;
+    const photo = fileSystem.getFotoUrl(userId, img);
+    res.sendFile(photo);
 });
 
 export default postRoutes;

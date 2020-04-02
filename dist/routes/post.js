@@ -37,6 +37,8 @@ postRoutes.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 postRoutes.post('/', [autenticacion_1.verificarToken], (req, res) => {
     const body = req.body;
     body.usuario = req.usuario._id;
+    const imagenes = fileSystem.moveTempPost(req.usuario._id);
+    body.imgs = imagenes;
     post_model_1.Post.create(body).then((postDB) => __awaiter(void 0, void 0, void 0, function* () {
         yield postDB.populate('usuario', '-password').execPopulate();
         res.json({
@@ -75,4 +77,10 @@ postRoutes.post('/upload', [autenticacion_1.verificarToken], (req, res) => __awa
         file: file.mimetype
     });
 }));
+postRoutes.get('/imagen/:userid/:img', (req, res) => {
+    const userId = req.params.userid;
+    const img = req.params.img;
+    const photo = fileSystem.getFotoUrl(userId, img);
+    res.sendFile(photo);
+});
 exports.default = postRoutes;

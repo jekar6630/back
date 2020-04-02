@@ -39,5 +39,32 @@ class FileSystem {
         }
         return pathUserTemp;
     }
+    moveTempPost(userId) {
+        const pathTemp = path_1.default.resolve(__dirname, '../uploads/', userId, 'temp');
+        const pathPost = path_1.default.resolve(__dirname, '../uploads/', userId, 'post');
+        if (!fs_1.default.existsSync(pathTemp)) {
+            return [];
+        }
+        if (!fs_1.default.existsSync(pathPost)) {
+            fs_1.default.mkdirSync(pathPost);
+        }
+        const imagenesTemp = this.obtenerImagenesTemp(userId);
+        imagenesTemp.forEach(imagen => {
+            fs_1.default.renameSync(`${pathTemp}/${imagen}`, `${pathPost}/${imagen}`);
+        });
+        return imagenesTemp;
+    }
+    obtenerImagenesTemp(userId) {
+        const pathTemp = path_1.default.resolve(__dirname, '../uploads/', userId, 'temp');
+        return fs_1.default.readdirSync(pathTemp) || [];
+    }
+    getFotoUrl(userId, img) {
+        const pathPhoto = path_1.default.resolve(__dirname, '../uploads', userId, 'post', img);
+        const exists = fs_1.default.existsSync(pathPhoto);
+        if (!exists) {
+            return path_1.default.resolve(__dirname, '../assets/original.jpg');
+        }
+        return pathPhoto;
+    }
 }
 exports.default = FileSystem;
