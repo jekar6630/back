@@ -8,7 +8,7 @@ const postSchema = new mongoose_1.Schema({
     mensaje: {
         type: String
     },
-    imgs: [{
+    img: [{
             type: String
         }],
     coords: {

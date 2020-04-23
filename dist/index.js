@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const server_1 = __importDefault(require("./classes/server"));
 const usuario_1 = __importDefault(require("./routes/usuario"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const cors_1 = __importDefault(require("cors"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const express_fileupload_1 = __importDefault(require("express-fileupload"));
 const post_1 = __importDefault(require("./routes/post"));
@@ -15,6 +16,8 @@ server.app.use(body_parser_1.default.urlencoded({ extended: true }));
 server.app.use(body_parser_1.default.json());
 //File upload
 server.app.use(express_fileupload_1.default({ useTempFiles: true }));
+//Config cors
+server.app.use(cors_1.default({ origin: true, credentials: true }));
 //Rutas del app
 server.app.use('/user', usuario_1.default);
 server.app.use('/post', post_1.default);
