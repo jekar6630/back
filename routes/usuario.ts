@@ -6,22 +6,19 @@ import { verificarToken } from '../middlewares/autenticacion';
 
 const userRoutes = Router();
 
-userRoutes.get('/prueba', ( req, res ) => {
-    res.json({
-        ok: true,
-        mes: "Todo ok"
-    })
-});
-
 userRoutes.post('/create', ( req: Request , res: Response ) => {
     const user = {
         nombre: req.body.nombre,
+        apellidos: req.body.apellidos,
+        sobrenombre: req.body.sobrenombre,
+        avatar: req.body.avatar,
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 10),
-        avatar: req.body.avatar
+        type: req.body.type
     }
 
     Usuario.create(user).then( userDB => {
+        console.log(userDB);
         const tokenUsuario = Token.getJwtToken({
             _id: userDB._id,
             nombre: userDB.nombre,

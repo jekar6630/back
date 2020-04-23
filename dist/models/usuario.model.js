@@ -10,6 +10,13 @@ const usuarioSchema = new mongoose_1.Schema({
         type: String,
         required: [true, 'El nombre es obligatorio']
     },
+    apellidos: {
+        type: String,
+        required: [true, 'Los apellidos son obligatorios']
+    },
+    sobrenombre: {
+        type: String
+    },
     avatar: {
         type: String,
         default: 'av-1.png'
@@ -22,6 +29,13 @@ const usuarioSchema = new mongoose_1.Schema({
     password: {
         type: String,
         required: [true, 'La contrseña es obligatoria']
+    },
+    created: {
+        type: Date
+    },
+    type: {
+        type: Number,
+        required: [true, 'El tipo del usuario es obligatorio']
     }
 });
 usuarioSchema.method('compararPassword', function (password = '') {

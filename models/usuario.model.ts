@@ -6,6 +6,13 @@ const usuarioSchema = new Schema({
         type: String,
         required: [ true, 'El nombre es obligatorio']
     },
+    apellidos:{
+        type: String,
+        required: [ true, 'Los apellidos son obligatorios']
+    },
+    sobrenombre:{
+        type: String
+    },
     avatar:{
         type: String,
         default: 'av-1.png'
@@ -18,6 +25,13 @@ const usuarioSchema = new Schema({
     password:{
         type: String,
         required:[ true, 'La contrseña es obligatoria' ]
+    },
+    created:{
+        type: Date
+    },
+    type:{
+        type: Number,
+        required:[ true, 'El tipo del usuario es obligatorio']
     }
 });
 
@@ -30,9 +44,13 @@ usuarioSchema.method('compararPassword', function(password: String = '') : boole
 
 interface IUsuario extends Document{
     nombre: string;
+    apellidos: string;
+    sobrenombre: string;
+    avatar: string;
     email: string;
     password: string;
-    avatar: string;
+    created: Date;
+    type: number;
 
     compararPassword(password: string) : boolean;
 }

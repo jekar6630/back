@@ -5,6 +5,9 @@ import cors from 'cors';
 import bodyParser from "body-parser";
 import fileUpload from "express-fileupload";
 import postRoutes from './routes/post';
+import jugadaRoutes from './routes/jugada';
+import frontonRoutes from './routes/fronton';
+import jugadorRoutes from './routes/jugador';
 
 const server = new Server();
 //Body parser
@@ -17,6 +20,9 @@ server.app.use( cors({ origin: true, credentials: true }) );
 //Rutas del app
 server.app.use('/user', userRoutes );   
 server.app.use('/post', postRoutes );
+server.app.use('/jugada', jugadaRoutes );
+server.app.use('/fronton', frontonRoutes);
+server.app.use('/jugador', jugadorRoutes);
 //Db mongoose
 mongoose.connect('mongodb://localhost:27017/fotosgram',
                  { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true}, ( err ) => {
@@ -27,5 +33,5 @@ mongoose.connect('mongodb://localhost:27017/fotosgram',
                  });
 
 server.start(() =>{
-    console.log(`Servidor corriendo ${ server.port }`);
+    console.log(`Servidor corriendo--- ${ server.port }`);
 });

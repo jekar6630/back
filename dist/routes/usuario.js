@@ -9,20 +9,18 @@ const bcrypt_1 = __importDefault(require("bcrypt"));
 const token_1 = __importDefault(require("../classes/token"));
 const autenticacion_1 = require("../middlewares/autenticacion");
 const userRoutes = express_1.Router();
-userRoutes.get('/prueba', (req, res) => {
-    res.json({
-        ok: true,
-        mes: "Todo ok"
-    });
-});
 userRoutes.post('/create', (req, res) => {
     const user = {
         nombre: req.body.nombre,
+        apellidos: req.body.apellidos,
+        sobrenombre: req.body.sobrenombre,
+        avatar: req.body.avatar,
         email: req.body.email,
         password: bcrypt_1.default.hashSync(req.body.password, 10),
-        avatar: req.body.avatar
+        type: req.body.type
     };
     usuario_model_1.Usuario.create(user).then(userDB => {
+        console.log(userDB);
         const tokenUsuario = token_1.default.getJwtToken({
             _id: userDB._id,
             nombre: userDB.nombre,
