@@ -26,4 +26,25 @@ juagadaRoutes.post('/', [autenticacion_1.verificarToken], (req, res) => {
         res.json(err);
     });
 });
+juagadaRoutes.get('/', [autenticacion_1.verificarToken], (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let pagina = Number(req.query.pagina) || 1;
+    let skip = pagina - 1;
+    skip = skip * 10;
+    const body = req.body;
+    console.log('body: ' + body);
+    body.usuario = req.usuario._id;
+    console.log('usuario: ' + body.usuario);
+    const jugadas = yield jugada_model_1.Jugada.find({ usuario: body.usuario })
+        .sort({ _id: -1 })
+        .skip(skip)
+        .limit(10)
+        .populate('usuario', '-password')
+        .exec();
+    console.log(jugadas);
+    res.json({
+        ok: true,
+        post: "success",
+        jugadas: jugadas
+    });
+}));
 exports.default = juagadaRoutes;
